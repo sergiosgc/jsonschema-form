@@ -1,0 +1,19 @@
+{
+    "name": "sergiosgc/jsonschema-form",
+    "description": "Form builder based on mozilla-services/react-jsonschema-form",
+    "keywords": ["json", "form"],
+    "homepage": "https://github.com/sergiosgc/jsonschema-form",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sérgio Carvalho",
+            "homepage": "https://github.com/sergiosgc"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "autoload": {
+        "psr-4": {"sergiosgc\\form": "sergiosgc/form"}
+    }
+}
