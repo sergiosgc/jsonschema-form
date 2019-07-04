@@ -10,6 +10,7 @@ class Form {
     public $required = [];
     public $properties = [];
     public static $typeWidgetMap = [
+        'hidden' => 'hidden',
         'text' => 'text',
         'integer' => 'text',
         'color' => 'text',
