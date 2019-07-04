@@ -48,6 +48,16 @@ class Form {
         $values = (array) $values;
         foreach ($values as $k => $v) if (isset($this->properties[$k])) $this->properties[$k]['value'] = $v;
     }
+    public function setErrors($values) {
+        $values = (array) $values;
+        foreach ($values as $k => $v) if (isset($this->properties[$k])) {
+            if (!$this->properties[$k]['errors']) $this->properties[$k]['errors'] = [];
+            if (!is_array($this->properties[$k]['errors'])) $this->properties[$k]['errors'] = [ (string) $this->properties[$k]['errors'] ];
+            if (!is_array($v)) $v = [ (string) $v ];
+            $v = array_values($v);
+            $this->properties[$k]['errors'] = array_merge($this->properties[$k]['errors'], $v);
+        }
+    }
     public static function addPropertyDefaultHandler($handler) {
         if (!is_callable($handler)) throw new Exception('Handler must be callable');
         static::$propertyDefaultHandlers[] = $handler;
