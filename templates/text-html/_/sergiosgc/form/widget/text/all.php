@@ -17,6 +17,7 @@ foreach([
 ] as $widgetProperty => $htmlProperty) {
     if (isset($tvars['property'][$widgetProperty])) $properties[$htmlProperty] = $tvars['property'][$widgetProperty];
 }
+if ($tvars['property']['errors']) $properties['class'] = isset($properties['class']) ? sprintf('%s error', $properties['class']) : 'error';
 if (isset($tvars['property']['ui:title'])) printf('<label for="%s">%s%s</label>', 
     $properties['name'], 
     $tvars['property']['ui:title'], 
@@ -31,3 +32,13 @@ printf('<input %s>', implode(' ', array_filter(array_map(
     array_keys($properties),
     $properties
 ))));
+if ($tvars['property']['errors']) {
+    if (count($tvars['property']['errors']) == 1) {
+        printf('<span class="errors">%s</span>', htmlspecialchars($tvars['property']['errors'][0]));
+    } else {
+        printf('<ul class="errors">%s</ul>', implode('', array_map(
+            function($err) { return sprintf('<li>%s</li>', htmlspecialchars($err)); },
+            $tvars['property']['errors']
+        )));
+    }
+}
