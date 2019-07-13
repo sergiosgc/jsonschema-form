@@ -9,6 +9,54 @@ class Form {
     public $class = '';
     public $required = [];
     public $properties = [];
+    public static $htmlPropertyMaps = [
+        'global' => [
+            'ui:accesskey' => 'accesskey',
+            'ui:autocapitalize' => 'autocapitalize',
+            'ui:class' => 'class',
+            'ui:contenteditable' => 'contenteditable',
+            'ui:contextmenu' => 'contextmenu',
+            'ui:dir' => 'dir',
+            'ui:draggable' => 'draggable',
+            'ui:dropzone' => 'dropzone',
+            'ui:exportparts' => 'exportparts',
+            'ui:hidden' => 'hidden',
+            'ui:id' => 'id',
+            'ui:inputmode' => 'inputmode',
+            'ui:is' => 'is',
+            'ui:itemid' => 'itemid',
+            'ui:itemprop' => 'itemprop',
+            'ui:itemref' => 'itemref',
+            'ui:itemscope' => 'itemscope',
+            'ui:itemtype' => 'itemtype',
+            'ui:lang' => 'lang',
+            'ui:part ' => 'part ',
+            'ui:slot' => 'slot',
+            'ui:spellcheck ' => 'spellcheck ',
+            'ui:style' => 'style',
+            'ui:tabindex' => 'tabindex',
+            'ui:title' => 'title',
+            'ui:translate ' => 'translate ',
+        ],
+        'textarea' => [
+            'ui:autocomplete' => 'autocomplete',
+            'ui:autofocus' => 'autofocus',
+            'ui:cols' => 'cols',
+            'ui:disabled' => 'disabled',
+            'ui:form' => 'form',
+            'ui:maxlength' => 'maxlength',
+            'ui:minlength' => 'minlength',
+            'ui:name' => 'name',
+            'ui:placeholder' => 'placeholder',
+            'ui:readonly' => 'readonly',
+            'ui:required' => 'required',
+            'ui:rows' => 'rows',
+            'ui:spellcheck' => 'spellcheck',
+            'ui:wrap' => 'wrap',
+        ]
+    ];
+
+
     public static $typeWidgetMap = [
         'hidden' => 'hidden',
         'text' => 'text',
