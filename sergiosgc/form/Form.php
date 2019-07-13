@@ -93,7 +93,11 @@ class Form {
         foreach (['title', 'description', 'action', 'htmlID', 'class', 'required', 'properties'] as $field) if (isset($definition[$field])) $this->$field = $definition[$field];
     }
     public function setValues($values) {
-        $values = (array) $values;
+        if (interface_exists('\sergiosgc\crud\Describable') && $values instanceof \sergiosgc\crud\Describable) {
+            $values = array_reduce(array_keys($values::describeFields()), function($acc, $field) use ($values) { $acc[$field] = $values->$field; return $acc; }, []);
+        } else {
+            $values = array_reduce(array_keys((array) $values), function($acc, $field) use ($values) { $acc[$field] = $values[$field]; return $acc; }, []);
+        }
         foreach ($values as $k => $v) if (isset($this->properties[$k])) $this->properties[$k]['value'] = $v;
     }
     public function setErrors($values) {
