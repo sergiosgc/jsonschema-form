@@ -1,5 +1,5 @@
 <?php
-$properties = [ 'name' => $tvars['propertyName'], 'type' => 'text' ];
+$properties = [ 'name' => $tvars['propertyName'], 'type' => $tvars['property']['type'] ];
 foreach([
     'ui:class' => 'class',
     'value' => 'value',
