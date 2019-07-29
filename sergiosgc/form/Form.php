@@ -69,7 +69,9 @@ class Form {
         'range' => 'text',
         'telephone' => 'text',
         'url' => 'text',
+        'password' => 'text',
         'submit' => 'submit',
+        'json' => 'textarea'
     ];
     public static $typeUIOptionsMap = [
         'integer' => [ 'inputType' => 'number' ],
