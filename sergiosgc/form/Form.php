@@ -114,7 +114,7 @@ class Form {
     }
     public static function addPropertyDefaultHandler($handler) {
         if (!is_callable($handler)) throw new Exception('Handler must be callable');
-        static::$propertyDefaultHandlers[] = $handler;
+        \array_unshift(static::$propertyDefaultHandlers, $handler);
     }
     protected static function _setDefaults($existing, $defaults) {
         return array_reduce(
