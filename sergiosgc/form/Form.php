@@ -92,7 +92,7 @@ class Form {
     public static $propertyDefaultHandlers = [ ['\sergiosgc\form\Form', 'setWidgetDefaults' ]];
     public function __construct($definition) {
         if (is_string($definition)) $definition = json_decode($definition, true);
-        foreach (['title', 'description', 'action', 'htmlID', 'class', 'required', 'properties'] as $field) if (isset($definition[$field])) $this->$field = $definition[$field];
+        foreach (['title', 'description', 'action', 'method', 'htmlID', 'class', 'required', 'properties'] as $field) if (isset($definition[$field])) $this->$field = $definition[$field];
     }
     public function setValues($values) {
         if (interface_exists('\sergiosgc\crud\Describable') && $values instanceof \sergiosgc\crud\Describable) {
@@ -143,6 +143,7 @@ class Form {
         if ($this->class) $attributes['class'] = htmlspecialchars($this->class);
         if ($this->htmlID) $attributes['id'] = htmlspecialchars($this->htmlID);
         if ($this->action) $attributes['action'] = htmlspecialchars($this->action);
+        if ($this->method) $attributes['method'] = htmlspecialchars($this->method);
         printf('<form %s>', implode(' ', array_map(
             function($k, $v) { return sprintf('%s="%s"', $k, $v); }, 
             array_keys($attributes), 
