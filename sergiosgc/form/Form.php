@@ -144,6 +144,7 @@ class Form {
         if ($this->htmlID) $attributes['id'] = htmlspecialchars($this->htmlID);
         if ($this->action) $attributes['action'] = htmlspecialchars($this->action);
         if ($this->method) $attributes['method'] = htmlspecialchars($this->method);
+        if ($this->method) $attributes['method'] = htmlspecialchars($this->action);
         printf('<form %s>', implode(' ', array_map(
             function($k, $v) { return sprintf('%s="%s"', $k, $v); }, 
             array_keys($attributes), 
