@@ -96,7 +96,14 @@ class Form {
     }
     public function setValues($values) {
         if (interface_exists('\sergiosgc\crud\Describable') && $values instanceof \sergiosgc\crud\Describable) {
-            $values = array_reduce(array_keys($values::describeFields()), function($acc, $field) use ($values) { $acc[$field] = $values->$field; return $acc; }, []);
+            $values = array_reduce(array_keys($values::describeFields()), 
+                function($acc, $field) use ($values) { 
+                    try {
+                        $acc[$field] = $values->$field; 
+                    } catch (\Error $e) { } // Access is not possible (property is either private or protected and no __get handles access. Ignore property
+                    return $acc; 
+                }, 
+                []);
         } else {
             $values = array_reduce(array_keys((array) $values), function($acc, $field) use ($values) { $acc[$field] = $values[$field]; return $acc; }, []);
         }
