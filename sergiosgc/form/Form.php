@@ -74,15 +74,15 @@ class Form {
         'json' => 'textarea'
     ];
     public static $typeUIOptionsMap = [
-        'integer' => [ 'inputType' => 'number' ],
-        'color' => [ 'inputType' => 'color' ],
-        'date' => [ 'inputType' => 'date' ],
-        'time' => [ 'inputType' => 'time' ],
-        'timestamp' => [ 'inputType' => 'datetime-local' ],
-        'email' => [ 'inputType' => 'email' ],
-        'range' => [ 'inputType' => 'range', 'min' => 1, 'max' => 10 ],
-        'telephone' => [ 'inputType' => 'tel' ],
-        'url' => [ 'inputType' => 'url' ],
+        'integer' => [ 'ui:inputType' => 'number' ],
+        'color' => [ 'ui:inputType' => 'color' ],
+        'date' => [ 'ui:inputType' => 'date' ],
+        'time' => [ 'ui:inputType' => 'time' ],
+        'timestamp' => [ 'ui:inputType' => 'datetime-local' ],
+        'email' => [ 'ui:inputType' => 'email' ],
+        'range' => [ 'ui:inputType' => 'range', 'min' => 1, 'max' => 10 ],
+        'telephone' => [ 'ui:inputType' => 'tel' ],
+        'url' => [ 'ui:inputType' => 'url' ],
     ];
     public static $uiDefaultsMap = [
         'ui:title' => 'title',
