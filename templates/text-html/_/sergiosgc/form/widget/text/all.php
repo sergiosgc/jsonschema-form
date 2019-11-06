@@ -14,6 +14,7 @@ foreach([
     'ui:disabled' => 'disabled',
     'validation:required' => 'required',
     'ui:tabIndex' => 'tabindex',
+    'ui:inputType' => 'type',
 ] as $widgetProperty => $htmlProperty) {
     if (isset($tvars['property'][$widgetProperty])) $properties[$htmlProperty] = $tvars['property'][$widgetProperty];
 }

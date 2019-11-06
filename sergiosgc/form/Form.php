@@ -138,7 +138,7 @@ class Form {
             if (isset(static::$typeWidgetMap[$definition['type']])) $defaults['ui:widget'] = static::$typeWidgetMap[$definition['type']];
             foreach (static::$uiDefaultsMap as $uiProperty => $baseProperty) if (isset($definition[$baseProperty])) $defaults[$uiProperty] = $definition[$baseProperty];
             $properties[$name] = static::_setDefaults($properties[$name], $defaults);
-            if (isset(static::$typeUIOptionsMap[$definition['type']])) $properties[$name]['ui:options'] = static::_setDefaults(isset($definition['ui:options']) ? $definition['ui:options'] : [], static::$typeUIOptionsMap[$definition['type']]);
+            $properties[$name] = static::_setDefaults($properties[$name], isset(static::$typeUIOptionsMap[$definition['type']]) ? static::$typeUIOptionsMap[$definition['type']] : []);
         }
         return $properties;
     }
