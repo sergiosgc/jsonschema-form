@@ -25,6 +25,7 @@ if (isset($tvars['property']['ui:title'])) printf('<label for="%s">%s%s</label>'
     isset($properties['required']) && $properties['required'] ? '<span class="required">*</span>' : ''
 );
 if (isset($tvars['property']['ui:description'])) printf('<p class="field-description field-description-%s">%s</p>', $properties['name'], $tvars['property']['ui:description']);
+if ($properties['value'] instanceof \DateTime) $properties['value'] = $properties['value']->format(\DateTimeInterface::ISO8601);
 printf('<input %s>', implode(' ', array_filter(array_map(
     function($k, $v) {
         if (is_bool($v)) return $v ? $k : '';
