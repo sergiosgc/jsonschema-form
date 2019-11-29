@@ -107,7 +107,14 @@ class Form {
         } else {
             $values = array_reduce(array_keys((array) $values), function($acc, $field) use ($values) { $acc[$field] = $values[$field]; return $acc; }, []);
         }
-        foreach ($values as $k => $v) if (isset($this->properties[$k])) $this->properties[$k]['value'] = $v;
+        foreach ($values as $k => $v) $this->setValue($k, $v);
+    }
+    public function setValue($propertyName, $value) {
+        if (isset($this->properties[$propertyName])) $this->properties[$propertyName]['value'] = $value;
+    }
+    public function getValue($propertyName) {
+        if (!isset($this->properties[$propertyName]) || !isset($this->properties[$propertyName]['value'])) return null;
+        return $this->properties[$propertyName]['value'];
     }
     public function setErrors($values) {
         $values = (array) $values;
