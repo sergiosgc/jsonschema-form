@@ -7,8 +7,13 @@ foreach([
     'ui:disabled' => 'disabled',
     'validation:required' => 'required',
     'ui:tabIndex' => 'tabindex',
-] as $widgetProperty => $htmlProperty) {
-    if (isset($tvars['property'][$widgetProperty])) $properties[$htmlProperty] = $tvars['property'][$widgetProperty];
+    'ui:placeholder' => 'placeholder'
+] as $widgetPropertyName => $htmlProperty) {
+    if (isset($tvars['property'][$widgetPropertyName])) $properties[$htmlProperty] = $tvars['property'][$widgetPropertyName];
+}
+if (isset($tvars['property']['readonly'])) $properties['disabled'] = 'disabled';
+foreach ($tvars['property'] as $widgetPropertyName => $widgetProperty) {
+    if (substr($widgetPropertyName, 0, strlen('ui:data-')) == 'ui:data-') $properties[substr($widgetPropertyName, strlen('ui:'))] = $widgetProperty;
 }
 if (isset($tvars['property']['errors']) && $tvars['property']['errors']) $properties['class'] = isset($properties['class']) ? sprintf('%s error', $properties['class']) : 'error';
 if (isset($tvars['property']['value'])) foreach($tvars['property']['options'] as $idx => $option) $tvars['property']['options'][$idx]['selected'] = ((string) $option['value'] == (string) $tvars['property']['value']);
@@ -18,6 +23,10 @@ if (isset($tvars['property']['ui:title'])) printf('<label for="%s">%s%s</label>'
     isset($properties['required']) && $properties['required'] ? '<span class="required">*</span>' : ''
 );
 if (isset($tvars['property']['ui:description'])) printf('<p class="field-description field-description-%s">%s</p>', $properties['name'], $tvars['property']['ui:description']);
+if (isset($tvars['property']['readonly'])) printf('<input type="hidden" name="%s" value="%s">',
+    htmlspecialchars($tvars['propertyName']),
+    htmlspecialchars($tvars['property']['value'])
+);
 printf('<select %s>', implode(' ', array_filter(array_map(
     function($k, $v) {
         if (is_bool($v)) return $v ? $k : '';

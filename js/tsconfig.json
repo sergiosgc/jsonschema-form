@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es2015",
+    "strict": true,
+    "sourceMap": true,
+    "noImplicitReturns": true,
+    "moduleResolution": "node",
+    "outDir": "./dist/",
+    "baseUrl": "/js/jsonschema-form",
+    "experimentalDecorators": true,
+    "lib": [ "dom" ]
+  },
+  "include": [
+    "./src/**/*"
+  ]
+}

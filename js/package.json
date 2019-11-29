@@ -1,0 +1,21 @@
+{
+  "name": "jsonschema-form",
+  "version": "1.0.0",
+  "description": "Companion javascript for jsonschema-form",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "typescript": "^3.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.6",
+    "ts-loader": "^6.2.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "author": "Sergio Carvalho <sergiosgc@gmail.com>",
+  "license": "ISC"
+}
