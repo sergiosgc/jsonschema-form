@@ -16,6 +16,7 @@ foreach ($tvars['property'] as $widgetPropertyName => $widgetProperty) {
     if (substr($widgetPropertyName, 0, strlen('ui:data-')) == 'ui:data-') $properties[substr($widgetPropertyName, strlen('ui:'))] = $widgetProperty;
 }
 if (isset($tvars['property']['errors']) && $tvars['property']['errors']) $properties['class'] = isset($properties['class']) ? sprintf('%s error', $properties['class']) : 'error';
+if (isset($tvars['property']['value']) && is_bool($tvars['property']['value'])) $tvars['property']['value'] = $tvars['property']['value'] ? 'true' : 'false';
 if (isset($tvars['property']['value'])) foreach($tvars['property']['options'] as $idx => $option) $tvars['property']['options'][$idx]['selected'] = ((string) $option['value'] == (string) $tvars['property']['value']);
 if (isset($tvars['property']['ui:title'])) printf('<label for="%s">%s%s</label>', 
     $properties['name'], 
