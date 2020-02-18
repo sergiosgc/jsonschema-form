@@ -39,6 +39,7 @@ export default class SelectLoader {
         let url: string = toUpdate.dataset.updateCallback!;
         let argumentRe = /%<([^>]*)>/;
         let match: any;
+        if ((updateSource as any).disabled as boolean) return;
         while (match = argumentRe.exec(url)) {
             if ("undefined" == typeof toUpdate.form![ match[1] ]) {
                 console.error("Form contains no argument '" + match[1] + "' when assembling update URL '" + toUpdate.dataset.updateCallback! + "'");
