@@ -9,6 +9,8 @@ class Form {
     public $class = '';
     public $required = [];
     public $properties = [];
+    public static $componentCallback = [ 'sergiosgc\form\Form', 'defaultComponentCallback' ];
+    public static function defaultComponentCallback() { throw new Exception('Component callback has not beed configured'); }
     public static $htmlPropertyMaps = [
         'global' => [
             'ui:accesskey' => 'accesskey',
@@ -99,7 +101,7 @@ class Form {
             $values = array_reduce(array_keys($values::describeFields()), 
                 function($acc, $field) use ($values) { 
                     try {
-                        $acc[$field] = $values->$field; 
+                        if (isset($values->$field)) $acc[$field] = $values->$field; 
                     } catch (\Error $e) { } // Access is not possible (property is either private or protected and no __get handles access. Ignore property
                     return $acc; 
                 }, 
@@ -149,10 +151,13 @@ class Form {
         }
         return $properties;
     }
+    public function runDefaultHandlers() {
+        foreach (static::$propertyDefaultHandlers as $handler) $this->properties = call_user_func($handler, $this->properties);
+    }
+    /*
     public function output() {
         $tvars = [];
 
-        foreach (static::$propertyDefaultHandlers as $handler) $this->properties = call_user_func($handler, $this->properties);
         $attributes = ['method' => 'POST'];
         if ($this->class) $attributes['class'] = htmlspecialchars($this->class);
         if ($this->htmlID) $attributes['id'] = htmlspecialchars($this->htmlID);
@@ -173,5 +178,5 @@ class Form {
         }
         printf('</form>');
     }
+    */
 }
-\sergiosgc\output\Negotiated::registerComponentTemplatePath(realpath(__DIR__ . '/../../templates'));
