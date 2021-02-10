@@ -14,7 +14,7 @@ $form->method = $form->method ?? 'POST';
 $form->runDefaultHandlers();
 
     // Template components
-?><form method="<?= strtr(@$form->method, [ '&' => '&amp;', '"' => '&quot;' ]) ?>" id="<?= strtr(@$form->htmlID, [ '&' => '&amp;', '"' => '&quot;' ]) ?>" action="<?= strtr(@$form->action, [ '&' => '&amp;', '"' => '&quot;' ]) ?>"><?php ob_start();?><?php if ($form->title) { ?><h2 ><?php ob_start();print(@$form->title);print(ob_get_clean()); print('</h2>'); // h2
+?><form method="<?= strtr(@$form->method, [ '&' => '&amp;', '"' => '&quot;' ]) ?>" id="<?= strtr(@$form->htmlID, [ '&' => '&amp;', '"' => '&quot;' ]) ?>" action="<?= strtr(@$form->action, [ '&' => '&amp;', '"' => '&quot;' ]) ?>" enctype="<?= strtr(@$form->enctype, [ '&' => '&amp;', '"' => '&quot;' ]) ?>"><?php ob_start();?><?php if ($form->title) { ?><h2 ><?php ob_start();print(@$form->title);print(ob_get_clean()); print('</h2>'); // h2
 ?><?php } ?><?php if ($form->description) { ?><p class="description"><?php ob_start();print(@$form->description);print(ob_get_clean()); print('</p>'); // p
 ?><?php } ?><?php 
 foreach($form->properties as $name => $definition) {

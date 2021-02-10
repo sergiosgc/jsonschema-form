@@ -5,6 +5,7 @@ class Form {
     public $title = '';
     public $description = '';
     public $action = '';
+    public $enctype = 'application/x-www-form-urlencoded';
     public $htmlID = '';
     public $class = '';
     public $required = [];
@@ -94,7 +95,7 @@ class Form {
     public static $propertyDefaultHandlers = [ ['\sergiosgc\form\Form', 'setWidgetDefaults' ]];
     public function __construct($definition) {
         if (is_string($definition)) $definition = json_decode($definition, true);
-        foreach (['title', 'description', 'action', 'method', 'htmlID', 'class', 'required', 'properties'] as $field) if (isset($definition[$field])) $this->$field = $definition[$field];
+        foreach (['title', 'description', 'action', 'method', 'enctype', 'htmlID', 'class', 'required', 'properties'] as $field) if (isset($definition[$field])) $this->$field = $definition[$field];
     }
     public function setValues($values) {
         if (interface_exists('\sergiosgc\crud\Describable') && $values instanceof \sergiosgc\crud\Describable) {

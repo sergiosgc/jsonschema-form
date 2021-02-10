@@ -6,7 +6,7 @@ $form->method = $form->method ?? 'POST';
 $form->runDefaultHandlers();
 ?>
 ----
-<form method="$form->method" id="$form->htmlID" action="$form->action">
+<form method="$form->method" id="$form->htmlID" action="$form->action" enctype="$form->enctype">
 <![CDATA[<?php if ($form->title) { ?>]]><h2>$form->title</h2><![CDATA[<?php } ?>]]>
 <![CDATA[<?php if ($form->description) { ?>]]><p class="description">$form->description</p><![CDATA[<?php } ?>]]>
 <![CDATA[<?php 
