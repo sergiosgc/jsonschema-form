@@ -12,9 +12,18 @@ $form->setErrors($_REQUEST['errors'] ?? []);
 $form->setValues($_REQUEST['values'] ?? []);
 $form->method = $form->method ?? 'POST';
 $form->runDefaultHandlers();
+$properties = [
+ 'method' => @$form->method,
+ 'id' => @$form->htmlID,
+ 'action' => @$form->action,
+ 'enctype' => @$form->enctype,
+ 'class' => @$form->class
+];
+$properties = array_filter($properties);
 
     // Template components
-?><form method="<?= strtr(@$form->method, [ '&' => '&amp;', '"' => '&quot;' ]) ?>" id="<?= strtr(@$form->htmlID, [ '&' => '&amp;', '"' => '&quot;' ]) ?>" action="<?= strtr(@$form->action, [ '&' => '&amp;', '"' => '&quot;' ]) ?>" enctype="<?= strtr(@$form->enctype, [ '&' => '&amp;', '"' => '&quot;' ]) ?>"><?php ob_start();?><?php if ($form->title) { ?><h2 ><?php ob_start();print(@$form->title);print(ob_get_clean()); print('</h2>'); // h2
+ob_start(); // com/sergiosgc/Element
+?><?php if ($form->title) { ?><h2 ><?php ob_start();print(@$form->title);print(ob_get_clean()); print('</h2>'); // h2
 ?><?php } ?><?php if ($form->description) { ?><p class="description"><?php ob_start();print(@$form->description);print(ob_get_clean()); print('</p>'); // p
 ?><?php } ?><?php 
 foreach($form->properties as $name => $definition) {
@@ -26,5 +35,13 @@ foreach($form->properties as $name => $definition) {
             'property' => $definition
         ]);
 }
-?><?php print(ob_get_clean()); print('</form>'); // form
+?><?php 
+\app\Template::component(
+    'com/sergiosgc/Element',
+    [
+        'content' => ob_get_clean(),
+        'tagname' => 'form', 
+        'properties' => @$properties
+    ]
+);
 })(get_defined_vars());
