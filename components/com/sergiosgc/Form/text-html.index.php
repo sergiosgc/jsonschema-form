@@ -23,6 +23,14 @@ $properties = array_filter($properties);
 
     // Template components
 ob_start(); // com/sergiosgc/Element
+
+\app\Template::componentPre(
+    'com/sergiosgc/Element',
+    [
+        'tagname' => 'form', 
+        'properties' => @$properties
+    ]
+);
 ?><?php if ($form->title) { ?><h2 ><?php ob_start();print(@$form->title);print(ob_get_clean()); print('</h2>'); // h2
 ?><?php } ?><?php if ($form->description) { ?><p class="description"><?php ob_start();print(@$form->description);print(ob_get_clean()); print('</p>'); // p
 ?><?php } ?><?php 

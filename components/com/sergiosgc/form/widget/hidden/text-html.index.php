@@ -23,6 +23,14 @@ foreach([
     // Template components
 ob_start(); // com/sergiosgc/Element
 
+\app\Template::componentPre(
+    'com/sergiosgc/Element',
+    [
+        'tagname' => 'input', 
+        'properties' => @$properties
+    ]
+);
+
 \app\Template::component(
     'com/sergiosgc/Element',
     [

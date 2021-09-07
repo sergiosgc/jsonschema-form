@@ -70,6 +70,14 @@ if (1 == count($_REQUEST['property']['options']) && $_REQUEST['property']['ui:se
         print('</input>');
     }
 })(ob_get_clean());?><?php  } ?><?php ob_start(); // com/sergiosgc/Element
+
+\app\Template::componentPre(
+    'com/sergiosgc/Element',
+    [
+        'tagname' => 'select', 
+        'properties' => @$properties
+    ]
+);
 ?><?php   if (isset($_REQUEST['property']['ui:placeholder'])) { ?><option value=""><?php ob_start();print(@$_REQUEST['property']['ui:placeholder']);print(ob_get_clean()); print('</option>'); // option
 ?><?php   } ?><?php   foreach ($_REQUEST['property']['options'] as $option) { 
                   if ($option['selected'] ?? false) { ?><option value="<?= strtr(@$option['value'], [ '&' => '&amp;', '"' => '&quot;' ]) ?>" selected="selected"><?php ob_start();print(@$option['label']);print(ob_get_clean()); print('</option>'); // option

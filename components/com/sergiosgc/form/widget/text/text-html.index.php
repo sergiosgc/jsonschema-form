@@ -45,6 +45,14 @@ $descriptionClass = sprintf("field-description field-description-%s", $propertie
 ?><?php } ?><?php if (isset($_REQUEST['property']['ui:description'])) { ?><p class="<?= strtr(@$descriptionClass, [ '&' => '&amp;', '"' => '&quot;' ]) ?>"><?php ob_start();print(@$_REQUEST['property']['ui:description']);print(ob_get_clean()); print('</p>'); // p
 ?><?php } ?><?php ob_start(); // com/sergiosgc/Element
 
+\app\Template::componentPre(
+    'com/sergiosgc/Element',
+    [
+        'tagname' => 'input', 
+        'properties' => @$properties
+    ]
+);
+
 \app\Template::component(
     'com/sergiosgc/Element',
     [
