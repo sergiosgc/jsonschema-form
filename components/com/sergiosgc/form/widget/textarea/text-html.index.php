@@ -25,6 +25,14 @@ $descriptionClass = sprintf("field-description field-description-%s", $propertie
 ?><?php if ($label) { ?><label for="<?= strtr(@$properties['name'], [ '&' => '&amp;', '"' => '&quot;' ]) ?>"><?php ob_start();print(@$label);print(ob_get_clean()); print('</label>'); // label
 ?><?php } ?><?php if (isset($_REQUEST['property']['ui:description'])) { ?><p class="<?= strtr(@$descriptionClass, [ '&' => '&amp;', '"' => '&quot;' ]) ?>"><?php ob_start();print(@$_REQUEST['property']['ui:description']);print(ob_get_clean()); print('</p>'); // p
 ?><?php } ?><?php ob_start(); // com/sergiosgc/Element
+
+\app\Template::componentPre(
+    'com/sergiosgc/Element',
+    [
+        'tagname' => 'textarea', 
+        'properties' => @$properties
+    ]
+);
 print(@$_REQUEST['property']['value']);
 \app\Template::component(
     'com/sergiosgc/Element',
