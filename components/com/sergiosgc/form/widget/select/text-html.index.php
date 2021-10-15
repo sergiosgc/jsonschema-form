@@ -46,12 +46,18 @@ foreach ([
 ] as $booleanProperty) $_REQUEST['property'][$booleanProperty] = is_string($_REQUEST['property'][$booleanProperty]) ? $_REQUEST['property'][$booleanProperty] == "true" : (bool) $_REQUEST['property'][$booleanProperty];
 if (1 == count($_REQUEST['property']['options']) && $_REQUEST['property']['ui:readonlyonsinglevalue']) {
     $properties['disabled'] = true;
-    $_REQUEST['property']['options'][0]['selected'] = true;
 }
 if (1 == count($_REQUEST['property']['options']) && $_REQUEST['property']['ui:selectfirstonsinglevalue']) $_REQUEST['property']['options'][0]['selected'] = true;
 
     // Template components
-?><?php if (1 == count($_REQUEST['property']['options']) && $_REQUEST['property']['ui:hideonsinglevalue']) { ?><input type="hidden" name="<?= strtr(@$_REQUEST['name'], [ '&' => '&amp;', '"' => '&quot;' ]) ?>" value="<?= strtr(@$_REQUEST['property']['options'][0]['value'], [ '&' => '&amp;', '"' => '&quot;' ]) ?>"<?php ob_start();
+?><?php if (1 == count($_REQUEST['property']['options']) && $_REQUEST['property']['ui:hideonsinglevalue']) { 
+    $value = array_values(array_merge(
+        array_map(function($option) { return $option['value']; }, 
+            array_filter($_REQUEST['property']['options'], function($option) { return $option['selected'] ?? false; })
+        ),
+        [ $_REQUEST['property']['value'] ?? "" ]
+    ))[0];
+    ?><input type="hidden" name="<?= strtr(@$_REQUEST['name'], [ '&' => '&amp;', '"' => '&quot;' ]) ?>" value="<?= strtr(@$value, [ '&' => '&amp;', '"' => '&quot;' ]) ?>"<?php ob_start();
 (function($content) { // /input
     if ($content == '') {
         print(' />');
