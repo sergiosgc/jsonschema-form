@@ -55,7 +55,7 @@ if (1 == count($_REQUEST['property']['options']) && $_REQUEST['property']['ui:se
         array_map(function($option) { return $option['value']; }, 
             array_filter($_REQUEST['property']['options'], function($option) { return $option['selected'] ?? false; })
         ),
-        [ $_REQUEST['property']['value'] ?? "" ]
+        [ $_REQUEST['property']['value'] ?? $_REQUEST['property']['options'][0]['value'] ]
     ))[0];
     ?><input type="hidden" name="<?= strtr(@$_REQUEST['name'], [ '&' => '&amp;', '"' => '&quot;' ]) ?>" value="<?= strtr(@$value, [ '&' => '&amp;', '"' => '&quot;' ]) ?>"<?php ob_start();
 (function($content) { // /input
