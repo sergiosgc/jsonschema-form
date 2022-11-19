@@ -14,7 +14,7 @@
     "@types/node": "^12.12.6",
     "ts-loader": "^6.2.1",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.12"
   },
   "author": "Sergio Carvalho <sergiosgc@gmail.com>",
   "license": "ISC"
