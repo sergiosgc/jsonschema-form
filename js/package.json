@@ -12,9 +12,9 @@
   },
   "devDependencies": {
     "@types/node": "^12.12.6",
-    "ts-loader": "^6.2.1",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "ts-loader": "^9.4.2",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "author": "Sergio Carvalho <sergiosgc@gmail.com>",
   "license": "ISC"
