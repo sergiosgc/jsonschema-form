@@ -24,7 +24,7 @@ foreach([
 if (isset($properties['value']) && $properties['value'] instanceof \DateTime) $properties['value'] = $properties['value']->format(\DateTimeInterface::ISO8601);
 $properties['class'] = implode(' ', array_filter([
     isset($properties['class']) ? $properties['class'] : '',
-    isset($tvars['property']['errors']) && $tvars['property']['errors'] ? 'error' : ''
+    isset($_REQUEST['property']['errors']) && $_REQUEST['property']['errors'] ? 'error' : ''
 ]));
 $label = isset($_REQUEST['property']['ui:title']) ? sprintf('%s%s', 
     $_REQUEST['property']['ui:title'],

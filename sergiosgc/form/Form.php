@@ -59,7 +59,6 @@ class Form {
         ]
     ];
 
-
     public static $typeWidgetMap = [
         'hidden' => 'hidden',
         'text' => 'text',
@@ -74,7 +73,9 @@ class Form {
         'url' => 'text',
         'password' => 'text',
         'submit' => 'submit',
-        'json' => 'textarea'
+        'json' => 'textarea',
+        'fieldset' => 'Fieldset',
+        'wizard-step' => 'WizardStep'
     ];
     public static $typeUIOptionsMap = [
         'integer' => [ 'ui:inputType' => 'number' ],
@@ -119,15 +120,21 @@ class Form {
         if (!isset($this->properties[$propertyName]) || !isset($this->properties[$propertyName]['value'])) return null;
         return $this->properties[$propertyName]['value'];
     }
-    public function setErrors($values) {
-        $values = (array) $values;
-        foreach ($values as $k => $v) if (isset($this->properties[$k])) {
-            if (!$this->properties[$k]['errors']) $this->properties[$k]['errors'] = [];
-            if (!is_array($this->properties[$k]['errors'])) $this->properties[$k]['errors'] = [ (string) $this->properties[$k]['errors'] ];
-            if (!is_array($v)) $v = [ (string) $v ];
-            $v = array_values($v);
-            $this->properties[$k]['errors'] = array_merge($this->properties[$k]['errors'], $v);
+    public function setErrors($values, &$on = null) {
+        if (is_null($on)) {
+            $values = array_map(function($value) { 
+                if (!is_array($value)) $value = [ (string) $value ];
+                return array_values($value);
+            }, $values);
+            $on = &$this->properties;
         }
+        foreach($on as $propertyName => &$property) {
+            if (!isset($property['errors'])) $property['errors'] = [];
+            if (!is_array($property['errors'])) $property['errors'] = [ (string) $property['errors'] ];
+            if (isset($values[$propertyName])) $property['errors'] = array_merge($property['errors'], $values[$propertyName]);
+            if (isset($property['properties'])) $this->setErrors($values, $property['properties']);
+        }
+        return $on;
     }
     public static function addPropertyDefaultHandler($handler) {
         if (!is_callable($handler)) throw new Exception('Handler must be callable');
@@ -149,35 +156,11 @@ class Form {
             foreach (static::$uiDefaultsMap as $uiProperty => $baseProperty) if (isset($definition[$baseProperty])) $defaults[$uiProperty] = $definition[$baseProperty];
             $properties[$name] = static::_setDefaults($properties[$name], $defaults);
             $properties[$name] = static::_setDefaults($properties[$name], isset(static::$typeUIOptionsMap[$definition['type']]) ? static::$typeUIOptionsMap[$definition['type']] : []);
+            if (isset($properties[$name]['properties'])) $properties[$name]['properties'] = static::setWidgetDefaults($properties[$name]['properties']);
         }
         return $properties;
     }
     public function runDefaultHandlers() {
         foreach (static::$propertyDefaultHandlers as $handler) $this->properties = call_user_func($handler, $this->properties);
     }
-    /*
-    public function output() {
-        $tvars = [];
-
-        $attributes = ['method' => 'POST'];
-        if ($this->class) $attributes['class'] = htmlspecialchars($this->class);
-        if ($this->htmlID) $attributes['id'] = htmlspecialchars($this->htmlID);
-        if ($this->action) $attributes['action'] = htmlspecialchars($this->action);
-        if ($this->method) $attributes['method'] = htmlspecialchars($this->method);
-        if ($this->method) $attributes['method'] = htmlspecialchars($this->action);
-        printf('<form %s>', implode(' ', array_map(
-            function($k, $v) { return sprintf('%s="%s"', $k, $v); }, 
-            array_keys($attributes), 
-            $attributes)));
-        if ($this->title) printf('<h2>%s</h2>', $this->title);
-        if ($this->description) printf('<p class="description">%s</p>', $this->description);
-        foreach ($this->properties as $name => $definition) {
-            $tvars['propertyName'] = $name;
-            $tvars['property'] = $definition;
-            if (!isset($definition['ui:widget'])) throw new Exception(sprintf('No ui:widget defined for property %s', $name));
-            \sergiosgc\output\Negotiated::$singleton->template(sprintf('/_/sergiosgc/form/widget/%s/', $definition['ui:widget']), $tvars);
-        }
-        printf('</form>');
-    }
-    */
 }

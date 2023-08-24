@@ -8,13 +8,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "typescript": "^3.7.2"
+    "typescript": "^5.1.6"
   },
   "devDependencies": {
-    "@types/node": "^12.12.6",
-    "ts-loader": "^6.2.1",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "@types/node": "^20.5.1",
+    "ts-loader": "^9.4.4",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
   },
   "author": "Sergio Carvalho <sergiosgc@gmail.com>",
   "license": "ISC"
