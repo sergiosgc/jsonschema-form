@@ -74,6 +74,7 @@ class Form {
         'password' => 'text',
         'submit' => 'submit',
         'json' => 'textarea',
+        'button' => 'button',
         'fieldset' => 'Fieldset',
         'wizard-step' => 'WizardStep'
     ];
@@ -99,26 +100,30 @@ class Form {
         foreach (['title', 'description', 'action', 'method', 'enctype', 'htmlID', 'class', 'required', 'properties'] as $field) if (isset($definition[$field])) $this->$field = $definition[$field];
     }
     public function setValues($values) {
-        if (interface_exists('\sergiosgc\crud\Describable') && $values instanceof \sergiosgc\crud\Describable) {
-            $values = array_reduce(array_keys($values::describeFields()), 
-                function($acc, $field) use ($values) { 
-                    try {
-                        if (isset($values->$field)) $acc[$field] = $values->$field; 
-                    } catch (\Error $e) { } // Access is not possible (property is either private or protected and no __get handles access. Ignore property
-                    return $acc; 
-                }, 
-                []);
+        foreach($values as $key => $value) $this->setValue($key, $value);
+    }
+    public function setValue($propertyName, $value, &$on = null) {
+        if (is_null($on)) $on = &$this->properties;
+
+        if (isset($on[$propertyName])) {
+            $on[$propertyName]['value'] = $value;
         } else {
-            $values = array_reduce(array_keys((array) $values), function($acc, $field) use ($values) { $acc[$field] = $values[$field]; return $acc; }, []);
+            foreach($on as $childPropertyName => &$childProperty) {
+                if (isset($childProperty['properties'])) $childProperty['properties'] = $this->setValue($propertyName, $value, $childProperty['properties']);
+            }
         }
-        foreach ($values as $k => $v) $this->setValue($k, $v);
+        return $on;
     }
-    public function setValue($propertyName, $value) {
-        if (isset($this->properties[$propertyName])) $this->properties[$propertyName]['value'] = $value;
-    }
-    public function getValue($propertyName) {
-        if (!isset($this->properties[$propertyName]) || !isset($this->properties[$propertyName]['value'])) return null;
-        return $this->properties[$propertyName]['value'];
+    public function getValue($propertyName, &$on = null) {
+        if (is_null($on)) $on = &$this->properties;
+        if (isset($on[$propertyName])) return @$on[$propertyName]['value'] ?: null;
+        
+        $result = null;
+        foreach($on as $childPropertyName => &$childProperty) {
+            if (isset($childProperty['properties'])) $result = $this->getValue($propertyName, $childProperty['properties']);
+            if (!is_null($result)) return $result;
+        }
+        return $result;
     }
     public function setErrors($values, &$on = null) {
         if (is_null($on)) {
